@@ -1,0 +1,32 @@
+{
+  "name": "multidim-virtual-folders",
+  "version": "0.1.0",
+  "description": "Obsidian plugin for multi-dimensional virtual folders.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc --noEmit --skipLibCheck && node esbuild.config.mjs production"
+  },
+  "keywords": [
+    "obsidian",
+    "virtual-folders",
+    "frontmatter"
+  ],
+  "author": "Arislan Song",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arislan-x/multidim-virtual-folders.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Arislan-x/multidim-virtual-folders/issues"
+  },
+  "homepage": "https://github.com/Arislan-x/multidim-virtual-folders#readme",
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "builtin-modules": "^3.3.0",
+    "esbuild": "^0.23.0",
+    "obsidian": "^1.6.5",
+    "typescript": "^5.5.3"
+  }
+}
