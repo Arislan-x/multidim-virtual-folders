@@ -5,6 +5,7 @@
 - [ ] Confirm `manifest.json` version matches `package.json`.
 - [ ] Confirm `versions.json` contains the same version and minimum Obsidian version.
 - [ ] Run `npm install`.
+- [ ] Run `npm run lint`.
 - [ ] Run `npm run build`.
 - [ ] Test the plugin in a local vault.
 - [ ] Test drag-and-drop from the native file explorer.
@@ -25,8 +26,10 @@
 
 ## Obsidian Community Plugin Submission
 
-- [ ] Fork `obsidianmd/obsidian-releases`.
-- [ ] Add one entry to `community-plugins.json`.
-- [ ] Open a pull request that only changes `community-plugins.json`.
-- [ ] Complete every checkbox in the PR template.
+- [ ] Open the Obsidian Community developer dashboard.
+- [ ] Sign in with the Obsidian account that will own the plugin listing.
+- [ ] Connect the GitHub repository `Arislan-x/multidim-virtual-folders`.
+- [ ] Select the latest GitHub release tag.
+- [ ] Confirm the listing fields match `manifest.json` and `docs/community-plugin-entry.json`.
+- [ ] Submit the plugin for review.
 - [ ] Respond to review comments from the Obsidian team.

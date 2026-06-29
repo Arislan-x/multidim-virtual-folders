@@ -1,8 +1,8 @@
 {
   "id": "multidim-virtual-folders",
   "name": "MultiDim Virtual Folders",
-  "version": "0.1.0",
-  "minAppVersion": "1.5.0",
+  "version": "0.1.1",
+  "minAppVersion": "1.7.2",
   "description": "Create multi-dimensional virtual folders from frontmatter without moving real files.",
   "author": "Arislan Song",
   "authorUrl": "https://github.com/Arislan-x",

@@ -334,6 +334,9 @@ const TRANSLATIONS = {
     writeMode: "写入模式",
     writeModeDesc:
       "replace 会替换目标属性；append 会追加去重；move 预留为后续扩展，目前按 replace 处理。",
+    writeModeReplace: "替换",
+    writeModeAppend: "追加",
+    writeModeMove: "移动",
     orderAndDelete: "排序与删除",
     moveUp: "上移",
     moveDown: "下移",
@@ -443,6 +446,9 @@ const TRANSLATIONS = {
     writeMode: "Write mode",
     writeModeDesc:
       "replace overwrites the target property; append adds unique values; move is reserved and currently behaves like replace.",
+    writeModeReplace: "Replace",
+    writeModeAppend: "Append",
+    writeModeMove: "Move",
     orderAndDelete: "Order and delete",
     moveUp: "Move up",
     moveDown: "Move down",
@@ -498,7 +504,7 @@ export default class MultiDimVirtualFoldersPlugin extends Plugin {
       }
     });
 
-    this.registerDomEvent(document, "dragstart", (event: DragEvent) => {
+    this.registerDomEvent(activeDocument, "dragstart", (event: DragEvent) => {
       const filePath = readMarkdownPathFromDragSource(this.app, event.target);
       if (!filePath) {
         return;
@@ -513,7 +519,7 @@ export default class MultiDimVirtualFoldersPlugin extends Plugin {
       }
     });
 
-    this.registerDomEvent(document, "dragend", () => {
+    this.registerDomEvent(activeDocument, "dragend", () => {
       window.setTimeout(() => {
         lastKnownDraggedMarkdownPath = null;
       }, 0);
@@ -543,7 +549,7 @@ export default class MultiDimVirtualFoldersPlugin extends Plugin {
     const existingLeaves = this.app.workspace.getLeavesOfType(viewType);
 
     if (existingLeaves.length > 0) {
-      this.app.workspace.revealLeaf(existingLeaves[0]);
+      await this.app.workspace.revealLeaf(existingLeaves[0]);
       return;
     }
 
@@ -565,7 +571,7 @@ export default class MultiDimVirtualFoldersPlugin extends Plugin {
       type: viewType,
       active: true
     });
-    this.app.workspace.revealLeaf(leaf);
+    await this.app.workspace.revealLeaf(leaf);
   }
 
   getDimensions(side?: SidebarSide): VirtualDimensionConfig[] {
@@ -1056,11 +1062,13 @@ class MultiDimVirtualFoldersView extends ItemView {
       text: this.plugin.t("addTemporaryVirtualPath")
     });
     buttonEl.type = "button";
-    buttonEl.addEventListener("click", async () => {
-      const didAdd = await this.plugin.addManualPath(dimension.id, draftPath);
-      if (didAdd) {
-        this.requestRender(0);
-      }
+    buttonEl.addEventListener("click", () => {
+      void (async () => {
+        const didAdd = await this.plugin.addManualPath(dimension.id, draftPath);
+        if (didAdd) {
+          this.requestRender(0);
+        }
+      })();
     });
   }
 
@@ -1158,8 +1166,8 @@ class MultiDimVirtualFoldersView extends ItemView {
       cls: "multidim-vf-file-name",
       text: file.basename
     });
-    fileEl.addEventListener("click", async () => {
-      await this.app.workspace.getLeaf(false).openFile(file);
+    fileEl.addEventListener("click", () => {
+      void this.app.workspace.getLeaf(false).openFile(file);
     });
   }
 
@@ -1175,23 +1183,25 @@ class MultiDimVirtualFoldersView extends ItemView {
     targetEl.addEventListener("dragleave", () => {
       targetEl.classList.remove("is-drop-target");
     });
-    targetEl.addEventListener("drop", async (event) => {
-      event.preventDefault();
-      targetEl.classList.remove("is-drop-target");
+    targetEl.addEventListener("drop", (event) => {
+      void (async () => {
+        event.preventDefault();
+        targetEl.classList.remove("is-drop-target");
 
-      const filePath = readDraggedMarkdownPath(this.app, event);
-      if (!filePath) {
-        new Notice(this.plugin.t("missingDraggedPath"));
-        return;
-      }
+        const filePath = readDraggedMarkdownPath(this.app, event);
+        if (!filePath) {
+          new Notice(this.plugin.t("missingDraggedPath"));
+          return;
+        }
 
-      const abstractFile = this.app.vault.getAbstractFileByPath(filePath);
-      if (!(abstractFile instanceof TFile) || abstractFile.extension !== "md") {
-        new Notice(this.plugin.t("markdownOnly"));
-        return;
-      }
+        const abstractFile = this.app.vault.getAbstractFileByPath(filePath);
+        if (!(abstractFile instanceof TFile) || abstractFile.extension !== "md") {
+          new Notice(this.plugin.t("markdownOnly"));
+          return;
+        }
 
-      await this.writeFileToNode(abstractFile, config, node);
+        await this.writeFileToNode(abstractFile, config, node);
+      })();
     });
   }
 
@@ -1442,9 +1452,11 @@ class ConfirmModal extends Modal {
     confirmButtonEl.type = "button";
 
     cancelButtonEl.addEventListener("click", () => this.close());
-    confirmButtonEl.addEventListener("click", async () => {
-      await this.onConfirm();
-      this.close();
+    confirmButtonEl.addEventListener("click", () => {
+      void (async () => {
+        await this.onConfirm();
+        this.close();
+      })();
     });
 
     window.setTimeout(() => {
@@ -1474,7 +1486,7 @@ class MultiDimVirtualFoldersSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    containerEl.createEl("h2", { text: this.plugin.t("appName") });
+    new Setting(containerEl).setName(this.plugin.t("appName")).setHeading();
 
     new Setting(containerEl)
       .setName(this.plugin.t("settingsLanguageName"))
@@ -1655,7 +1667,9 @@ class MultiDimVirtualFoldersSettingTab extends PluginSettingTab {
       workingDimension.icon,
       getDefaultDimensionIcon(workingDimension)
     );
-    const headingTitleEl = headingMainEl.createEl("h3");
+    const headingTitleEl = headingMainEl.createDiv({
+      cls: "multidim-vf-setting-heading-title"
+    });
     const updateHeadingTitle = () => {
       headingTitleEl.setText(
         `${index + 1}. ${getDimensionTitle(
@@ -1914,9 +1928,9 @@ class MultiDimVirtualFoldersSettingTab extends PluginSettingTab {
       .setDesc(this.plugin.t("writeModeDesc"))
       .addDropdown((dropdown) =>
         dropdown
-          .addOption("replace", "replace")
-          .addOption("append", "append")
-          .addOption("move", "move")
+          .addOption("replace", this.plugin.t("writeModeReplace"))
+          .addOption("append", this.plugin.t("writeModeAppend"))
+          .addOption("move", this.plugin.t("writeModeMove"))
           .setValue(workingDimension.writeMode)
           .setDisabled(!isEditing)
           .onChange((value) => {
@@ -2161,9 +2175,7 @@ function buildDimensionTree(app: App, config: VirtualDimensionConfig): Dimension
   const files = app.vault.getMarkdownFiles();
 
   for (const file of files) {
-    const frontmatter = app.metadataCache.getFileCache(file)?.frontmatter as
-      | FrontmatterRecord
-      | undefined;
+    const frontmatter = app.metadataCache.getFileCache(file)?.frontmatter;
 
     if (config.type === "date") {
       const dateValue = readDateValue(frontmatter, config);
@@ -2517,10 +2529,6 @@ function translate(
 
 function normalizeLanguage(value: unknown): Language {
   return value === "en" ? "en" : "zh";
-}
-
-function normalizeSidebarSide(value: unknown): SidebarSide {
-  return value === "right" ? "right" : "left";
 }
 
 function normalizeDefaultOpenSide(value: unknown): DefaultOpenSide {
