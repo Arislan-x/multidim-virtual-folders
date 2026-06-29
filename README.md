@@ -62,7 +62,28 @@ After the plugin is approved by the Obsidian community plugin review process:
 3. Search for `MultiDim Virtual Folders`.
 4. Install and enable the plugin.
 
-### Visual Setup Guide
+### Offline Installation
+
+Use this method when the plugin is not available from the community store yet, or when the target computer cannot access GitHub or the Obsidian community plugin store.
+
+1. Download `multidim-virtual-folders.zip` from the [latest GitHub release](https://github.com/Arislan-x/multidim-virtual-folders/releases). If the target computer is offline, download it on another computer and copy it over.
+2. Open the target vault folder and go to:
+
+```text
+.obsidian/plugins/
+```
+
+3. Extract `multidim-virtual-folders.zip` into that folder.
+4. Confirm the files are in:
+
+```text
+.obsidian/plugins/multidim-virtual-folders/
+```
+
+5. Restart Obsidian or reload the app.
+6. Open Settings -> Community plugins and enable `MultiDim Virtual Folders`.
+
+#### Visual Setup Guide
 
 The screenshots below use the Chinese Obsidian interface, but the flow is the same in other languages.
 
@@ -85,27 +106,6 @@ The screenshots below use the Chinese Obsidian interface, but the flow is the sa
 5. Return to the main interface and open the virtual folder sidebar from the bottom icon.
 
 ![Open the sidebar](<Screenshots/5. 回到主界面，点击最下面图标，即可生成目录栏.png>)
-
-### Manual / Offline Installation
-
-Use this method when the plugin is not available from the community store yet, or when the target computer cannot access GitHub or the Obsidian community plugin store.
-
-1. Download `multidim-virtual-folders.zip` from the [latest GitHub release](https://github.com/Arislan-x/multidim-virtual-folders/releases). If the target computer is offline, download it on another computer and copy it over.
-2. Open the target vault folder and go to:
-
-```text
-.obsidian/plugins/
-```
-
-3. Extract `multidim-virtual-folders.zip` into that folder.
-4. Confirm the files are in:
-
-```text
-.obsidian/plugins/multidim-virtual-folders/
-```
-
-5. Restart Obsidian or reload the app.
-6. Open Settings -> Community plugins and enable `MultiDim Virtual Folders`.
 
 ### BRAT Installation
 

@@ -62,7 +62,28 @@ source_path: 参考资料/手册
 3. 搜索 `MultiDim Virtual Folders`。
 4. 安装并启用插件。
 
-### 图文设置步骤
+### 离线安装
+
+适用于插件尚未上架社区插件商店，或目标电脑无法访问 GitHub / Obsidian 社区插件商店的情况。
+
+1. 从 [最新 GitHub Release](https://github.com/Arislan-x/multidim-virtual-folders/releases) 下载 `multidim-virtual-folders.zip`。如果目标电脑离线，就在可联网电脑下载后复制过去。
+2. 打开目标 Obsidian 仓库目录，进入：
+
+```text
+.obsidian/plugins/
+```
+
+3. 将 `multidim-virtual-folders.zip` 解压到该目录。
+4. 确认文件位于：
+
+```text
+.obsidian/plugins/multidim-virtual-folders/
+```
+
+5. 重启 Obsidian 或重新加载应用。
+6. 打开设置中的第三方插件页面，启用 `MultiDim Virtual Folders`。
+
+#### 图文设置步骤
 
 下面的截图使用中文 Obsidian 界面，其他语言界面的操作路径相同。
 
@@ -85,27 +106,6 @@ source_path: 参考资料/手册
 5. 回到主界面，点击底部图标打开虚拟目录侧栏。
 
 ![打开目录栏](<Screenshots/5. 回到主界面，点击最下面图标，即可生成目录栏.png>)
-
-### 手动/离线安装
-
-适用于插件尚未上架社区插件商店，或目标电脑无法访问 GitHub / Obsidian 社区插件商店的情况。
-
-1. 从 [最新 GitHub Release](https://github.com/Arislan-x/multidim-virtual-folders/releases) 下载 `multidim-virtual-folders.zip`。如果目标电脑离线，就在可联网电脑下载后复制过去。
-2. 打开目标 Obsidian 仓库目录，进入：
-
-```text
-.obsidian/plugins/
-```
-
-3. 将 `multidim-virtual-folders.zip` 解压到该目录。
-4. 确认文件位于：
-
-```text
-.obsidian/plugins/multidim-virtual-folders/
-```
-
-5. 重启 Obsidian 或重新加载应用。
-6. 打开设置中的第三方插件页面，启用 `MultiDim Virtual Folders`。
 
 ### BRAT 安装
 
