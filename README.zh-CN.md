@@ -8,9 +8,15 @@
 
 MultiDim Virtual Folders 是一个 Obsidian 插件，可以根据笔记 frontmatter 创建多个并行的虚拟目录树。
 
-它可以让同一批 Markdown 笔记同时按日期、项目、来源、主题、状态或其他自定义维度组织，而不移动仓库里的真实文件。
+你的笔记不必只待在一个真实文件夹层级里。同一篇 Markdown 可以同时出现在日期、项目、来源、主题或任何你关心的维度中，而真实文件仍然留在原处。
 
-## 功能
+## 为什么需要它
+
+当一个真实目录结构不够用时，就可以使用 MultiDim Virtual Folders。
+
+例如，同一篇笔记既属于某个月份，也属于某个项目，还可能属于某个资料来源。你不需要复制文件，也不需要反复移动笔记，只要写入简单的 frontmatter，插件就会自动生成对应的虚拟侧栏。
+
+## 你可以做什么
 
 - 创建任意数量的虚拟目录维度。
 - 每个维度可显示在左侧栏、右侧栏或两侧同时显示。
@@ -27,9 +33,9 @@ MultiDim Virtual Folders 是一个 Obsidian 插件，可以根据笔记 frontmat
 - 支持 Emoji 和 Lucide 图标。
 - 支持中文和英文界面。
 
-## 示例
+## 一个小例子
 
-一篇笔记可以包含这样的 frontmatter：
+给笔记添加这样的 frontmatter：
 
 ```yaml
 ---
@@ -39,7 +45,7 @@ source_path: 参考资料/手册
 ---
 ```
 
-同一篇笔记可以同时出现在多个虚拟目录树中：
+这篇笔记就可以同时出现在多个虚拟目录树中：
 
 - 日期：`2026 / 2026-06 / 2026-06-29`
 - 项目：`示例项目 / 阶段一`
@@ -56,7 +62,31 @@ source_path: 参考资料/手册
 3. 搜索 `MultiDim Virtual Folders`。
 4. 安装并启用插件。
 
-### 离线安装
+### 图文设置步骤
+
+下面的截图使用中文 Obsidian 界面，其他语言界面的操作路径相同。
+
+1. 打开 Obsidian 设置。
+
+![打开设置](<Screenshots/1.点击左下角设置.png>)
+
+2. 进入第三方插件。
+
+![进入第三方插件](<Screenshots/2. 点击右上角“第三方应用”.png>)
+
+3. 找到 `multidim-virtual-folders`。
+
+![找到插件](<Screenshots/3.找到“multidim-virtual-folders”.png>)
+
+4. 打开插件选项。
+
+![打开选项](<Screenshots/4.点击“选项”.png>)
+
+5. 回到主界面，点击底部图标打开虚拟目录侧栏。
+
+![打开目录栏](<Screenshots/5. 回到主界面，点击最下面图标，即可生成目录栏.png>)
+
+### 单文件离线安装
 
 适用于目标电脑无法访问 GitHub 或 Obsidian 社区插件商店的情况。
 
@@ -78,7 +108,7 @@ source_path: 参考资料/手册
 6. 重启 Obsidian 或重新加载应用。
 7. 打开设置中的第三方插件页面，启用 `MultiDim Virtual Folders`。
 
-### 手动在线安装
+### 单文件手动安装
 
 1. 从 [最新 GitHub Release](https://github.com/Arislan-x/multidim-virtual-folders/releases) 下载 `multidim-virtual-folders.zip`。
 2. 打开你的 Obsidian 仓库目录，进入：
@@ -99,7 +129,7 @@ source_path: 参考资料/手册
 Arislan-x/multidim-virtual-folders
 ```
 
-## 使用
+## 使用体验
 
 可以从 Ribbon 图标或命令面板打开插件。
 
@@ -119,7 +149,7 @@ Arislan-x/multidim-virtual-folders
 - 写入模式
 - 临时虚拟路径
 
-大多数维度设置默认锁定。点击“编辑”后修改，点击“保存”后生效。
+大多数维度设置默认锁定，避免误改已经调好的结构。点击“编辑”后修改，点击“保存”后生效。
 
 ## 拖拽
 

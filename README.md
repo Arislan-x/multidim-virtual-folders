@@ -8,9 +8,15 @@
 
 MultiDim Virtual Folders is an Obsidian plugin for building multiple virtual folder trees from note frontmatter.
 
-It lets you organize the same Markdown notes by date, project, source, topic, status, or any other custom dimension without moving real files in the vault.
+Your notes do not have to live in only one folder hierarchy. A single note can appear under a date, a project, a source, a topic, and any other structure you care about, while the real Markdown file stays exactly where it is.
 
-## Features
+## Why Use It
+
+Use MultiDim Virtual Folders when one real folder tree is not enough.
+
+For example, the same note can be part of a monthly review, a project, and a source collection at the same time. Instead of duplicating files or constantly moving notes around, you write simple frontmatter fields and let the plugin build the sidebars for you.
+
+## What You Can Do
 
 - Create any number of virtual folder dimensions.
 - Show each dimension in the left sidebar, right sidebar, or both.
@@ -27,9 +33,9 @@ It lets you organize the same Markdown notes by date, project, source, topic, st
 - Use Emoji or Lucide icons.
 - Use Chinese or English interface text.
 
-## Example
+## A Small Example
 
-A note can contain frontmatter like this:
+Add frontmatter like this to a note:
 
 ```yaml
 ---
@@ -39,7 +45,7 @@ source_path: Reference/Manual
 ---
 ```
 
-The same note can then appear in several virtual folder trees:
+Then the note can appear in several virtual folder trees at once:
 
 - Date: `2026 / 2026-06 / 2026-06-29`
 - Project: `Example Project / Phase One`
@@ -56,7 +62,31 @@ After the plugin is approved by the Obsidian community plugin review process:
 3. Search for `MultiDim Virtual Folders`.
 4. Install and enable the plugin.
 
-### Offline Installation
+### Visual Setup Guide
+
+The screenshots below use the Chinese Obsidian interface, but the flow is the same in other languages.
+
+1. Open Obsidian settings.
+
+![Open settings](<Screenshots/1.点击左下角设置.png>)
+
+2. Go to Community plugins.
+
+![Open community plugins](<Screenshots/2. 点击右上角“第三方应用”.png>)
+
+3. Find `multidim-virtual-folders`.
+
+![Find the plugin](<Screenshots/3.找到“multidim-virtual-folders”.png>)
+
+4. Open the plugin options.
+
+![Open options](<Screenshots/4.点击“选项”.png>)
+
+5. Return to the main interface and open the virtual folder sidebar from the bottom icon.
+
+![Open the sidebar](<Screenshots/5. 回到主界面，点击最下面图标，即可生成目录栏.png>)
+
+### One-File Offline Installation
 
 Use this method when the target computer cannot access GitHub or the Obsidian community plugin store.
 
@@ -78,7 +108,7 @@ Use this method when the target computer cannot access GitHub or the Obsidian co
 6. Restart Obsidian or reload the app.
 7. Open Settings -> Community plugins and enable `MultiDim Virtual Folders`.
 
-### Manual Online Installation
+### One-File Manual Installation
 
 1. Download `multidim-virtual-folders.zip` from the [latest GitHub release](https://github.com/Arislan-x/multidim-virtual-folders/releases).
 2. Open your vault folder and go to:
@@ -99,7 +129,7 @@ Before community plugin approval, you can install the GitHub repository with BRA
 Arislan-x/multidim-virtual-folders
 ```
 
-## Usage
+## How It Feels To Use
 
 Open the plugin from the ribbon icon or from the command palette.
 
@@ -119,7 +149,7 @@ For each dimension, you can configure:
 - Write mode
 - Temporary virtual paths
 
-Most dimension settings are locked by default. Click `Edit`, change the values, then click `Save`.
+Most dimension settings are locked by default, so you do not accidentally change a working setup. Click `Edit`, adjust the dimension, then click `Save`.
 
 ## Drag And Drop
 
