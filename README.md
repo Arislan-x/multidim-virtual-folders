@@ -60,7 +60,7 @@ After the plugin is approved by the Obsidian community plugin review process:
 
 Use this method when the target computer cannot access GitHub or the Obsidian community plugin store.
 
-1. On a computer with internet access, download these files from a GitHub release:
+1. On a computer with internet access, download these files from the [latest GitHub release](https://github.com/Arislan-x/multidim-virtual-folders/releases):
    - `main.js`
    - `manifest.json`
    - `styles.css`
@@ -77,7 +77,7 @@ Use this method when the target computer cannot access GitHub or the Obsidian co
 
 ### Manual Online Installation
 
-1. Download `main.js`, `manifest.json`, and `styles.css` from a GitHub release.
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest GitHub release](https://github.com/Arislan-x/multidim-virtual-folders/releases).
 2. Create this folder in your vault:
 
 ```text
@@ -148,50 +148,6 @@ This plugin does not send data to external services.
 It does not use telemetry, analytics, remote code loading, or external network requests.
 
 All data stays in your local Obsidian vault and plugin settings.
-
-## Development
-
-```bash
-npm install
-npm run build
-```
-
-The build command generates `main.js`.
-
-For local testing, copy these files into `.obsidian/plugins/multidim-virtual-folders/`:
-
-- `manifest.json`
-- `main.js`
-- `styles.css`
-
-## Release To GitHub
-
-Release tags must match the version in `manifest.json` and `package.json`.
-
-Example:
-
-```bash
-git tag 0.1.0
-git push origin 0.1.0
-```
-
-The GitHub release workflow builds the plugin and uploads:
-
-- `main.js`
-- `manifest.json`
-- `styles.css`
-- `versions.json`
-
-## Submit To The Obsidian Community Plugin Store
-
-Obsidian community plugins are distributed through GitHub releases and listed through the `obsidianmd/obsidian-releases` repository.
-
-1. Publish a GitHub release whose tag matches `manifest.json`.
-2. Confirm the release includes `main.js`, `manifest.json`, and `styles.css`.
-3. Fork `obsidianmd/obsidian-releases`.
-4. Add this plugin to `community-plugins.json` using `docs/community-plugin-entry.json` as the template.
-5. Open a pull request that only changes `community-plugins.json`.
-6. Complete the Obsidian PR checklist and wait for review.
 
 ## License
 
