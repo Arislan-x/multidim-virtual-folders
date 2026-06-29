@@ -34,16 +34,16 @@ A note can contain frontmatter like this:
 ```yaml
 ---
 catalog_date: 2026-06-29
-project_path: Blog Project/Model Dialogues
-source_path: Literature/Pathology
+project_path: Example Project/Phase One
+source_path: Reference/Manual
 ---
 ```
 
 The same note can then appear in several virtual folder trees:
 
 - Date: `2026 / 2026-06 / 2026-06-29`
-- Project: `Blog Project / Model Dialogues`
-- Source: `Literature / Pathology`
+- Project: `Example Project / Phase One`
+- Source: `Reference / Manual`
 
 ## Installation
 
@@ -60,31 +60,34 @@ After the plugin is approved by the Obsidian community plugin review process:
 
 Use this method when the target computer cannot access GitHub or the Obsidian community plugin store.
 
-1. On a computer with internet access, download these files from the [latest GitHub release](https://github.com/Arislan-x/multidim-virtual-folders/releases):
-   - `main.js`
-   - `manifest.json`
-   - `styles.css`
-2. Copy the files to the offline computer.
-3. Create this folder in the target vault:
+1. On a computer with internet access, download `multidim-virtual-folders.zip` from the [latest GitHub release](https://github.com/Arislan-x/multidim-virtual-folders/releases).
+2. Copy the zip file to the offline computer.
+3. Open the target vault folder and go to:
+
+```text
+.obsidian/plugins/
+```
+
+4. Extract `multidim-virtual-folders.zip` into that folder.
+5. Confirm the files are in:
 
 ```text
 .obsidian/plugins/multidim-virtual-folders/
 ```
 
-4. Put `main.js`, `manifest.json`, and `styles.css` into that folder.
-5. Restart Obsidian or reload the app.
-6. Open Settings -> Community plugins and enable `MultiDim Virtual Folders`.
+6. Restart Obsidian or reload the app.
+7. Open Settings -> Community plugins and enable `MultiDim Virtual Folders`.
 
 ### Manual Online Installation
 
-1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest GitHub release](https://github.com/Arislan-x/multidim-virtual-folders/releases).
-2. Create this folder in your vault:
+1. Download `multidim-virtual-folders.zip` from the [latest GitHub release](https://github.com/Arislan-x/multidim-virtual-folders/releases).
+2. Open your vault folder and go to:
 
 ```text
-.obsidian/plugins/multidim-virtual-folders/
+.obsidian/plugins/
 ```
 
-3. Put the three files into that folder.
+3. Extract the zip file there.
 4. Reload Obsidian.
 5. Enable the plugin in Community plugins.
 

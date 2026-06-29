@@ -2,6 +2,7 @@ node_modules/
 
 # Build output generated for local testing and GitHub releases.
 main.js
+dist/
 
 # Obsidian local plugin data.
 data.json

@@ -165,7 +165,7 @@ const ICON_PRESETS: IconPreset[] = [
   { value: "flask-conical", label: "Lab flask", group: "lucide" },
   { value: "test-tube", label: "Test tube", group: "lucide" },
   { value: "microscope", label: "Microscope", group: "lucide" },
-  { value: "stethoscope", label: "Medical", group: "lucide" },
+  { value: "stethoscope", label: "Health", group: "lucide" },
   { value: "brain", label: "Brain", group: "lucide" },
   { value: "dna", label: "DNA", group: "lucide" },
   { value: "network", label: "Network", group: "lucide" },
@@ -320,7 +320,7 @@ const TRANSLATIONS = {
     temporaryVirtualPaths: "临时虚拟路径",
     temporaryVirtualPathsDesc:
       "只在虚拟树中创建可拖放目标，不创建真实文件夹。拖入笔记会写入目标属性。",
-    temporaryVirtualPathPlaceholder: "例：病理世界/循证病理平台",
+    temporaryVirtualPathPlaceholder: "例：示例项目/阶段一",
     addTemporaryVirtualPath: "创建临时路径",
     temporaryBadge: "临时",
     sortMenuTitle: "排序",
@@ -429,7 +429,7 @@ const TRANSLATIONS = {
     temporaryVirtualPaths: "Temporary virtual paths",
     temporaryVirtualPathsDesc:
       "Creates drop targets only in the virtual tree, without creating real folders. Dropped notes write the target property.",
-    temporaryVirtualPathPlaceholder: "Example: Medical World/Evidence Platform",
+    temporaryVirtualPathPlaceholder: "Example: Example Project/Phase One",
     addTemporaryVirtualPath: "Create temporary path",
     temporaryBadge: "Temporary",
     sortMenuTitle: "Sort",

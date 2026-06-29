@@ -39,10 +39,18 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Package plugin zip
+        run: |
+          mkdir -p dist/multidim-virtual-folders
+          cp main.js manifest.json styles.css dist/multidim-virtual-folders/
+          cd dist
+          zip -r multidim-virtual-folders.zip multidim-virtual-folders
+
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
           files: |
+            dist/multidim-virtual-folders.zip
             main.js
             manifest.json
             styles.css

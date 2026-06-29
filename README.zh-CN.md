@@ -34,16 +34,16 @@ MultiDim Virtual Folders 是一个 Obsidian 插件，可以根据笔记 frontmat
 ```yaml
 ---
 catalog_date: 2026-06-29
-project_path: Blog Project/Model Dialogues
-source_path: Literature/Pathology
+project_path: 示例项目/阶段一
+source_path: 参考资料/手册
 ---
 ```
 
 同一篇笔记可以同时出现在多个虚拟目录树中：
 
 - 日期：`2026 / 2026-06 / 2026-06-29`
-- 项目：`Blog Project / Model Dialogues`
-- 来源：`Literature / Pathology`
+- 项目：`示例项目 / 阶段一`
+- 来源：`参考资料 / 手册`
 
 ## 安装
 
@@ -60,31 +60,34 @@ source_path: Literature/Pathology
 
 适用于目标电脑无法访问 GitHub 或 Obsidian 社区插件商店的情况。
 
-1. 在可联网电脑上，从 [最新 GitHub Release](https://github.com/Arislan-x/multidim-virtual-folders/releases) 下载以下文件：
-   - `main.js`
-   - `manifest.json`
-   - `styles.css`
-2. 将这些文件复制到离线电脑。
-3. 在目标 Obsidian 仓库中创建目录：
+1. 在可联网电脑上，从 [最新 GitHub Release](https://github.com/Arislan-x/multidim-virtual-folders/releases) 下载 `multidim-virtual-folders.zip`。
+2. 将 zip 文件复制到离线电脑。
+3. 打开目标 Obsidian 仓库目录，进入：
+
+```text
+.obsidian/plugins/
+```
+
+4. 将 `multidim-virtual-folders.zip` 解压到该目录。
+5. 确认文件位于：
 
 ```text
 .obsidian/plugins/multidim-virtual-folders/
 ```
 
-4. 将 `main.js`、`manifest.json`、`styles.css` 放入该目录。
-5. 重启 Obsidian 或重新加载应用。
-6. 打开设置中的第三方插件页面，启用 `MultiDim Virtual Folders`。
+6. 重启 Obsidian 或重新加载应用。
+7. 打开设置中的第三方插件页面，启用 `MultiDim Virtual Folders`。
 
 ### 手动在线安装
 
-1. 从 [最新 GitHub Release](https://github.com/Arislan-x/multidim-virtual-folders/releases) 下载 `main.js`、`manifest.json`、`styles.css`。
-2. 在你的 Obsidian 仓库中创建目录：
+1. 从 [最新 GitHub Release](https://github.com/Arislan-x/multidim-virtual-folders/releases) 下载 `multidim-virtual-folders.zip`。
+2. 打开你的 Obsidian 仓库目录，进入：
 
 ```text
-.obsidian/plugins/multidim-virtual-folders/
+.obsidian/plugins/
 ```
 
-3. 将三个文件放入该目录。
+3. 将 zip 文件解压到该目录。
 4. 重新加载 Obsidian。
 5. 在第三方插件中启用本插件。
 
