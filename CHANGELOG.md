@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2
+
+- Replace the `builtin-modules` development dependency with Node's built-in `builtinModules`.
+- Add release notes extraction to the release workflow.
+
 ## 0.1.1
 
 - Add official Obsidian lint checks for release preparation.
