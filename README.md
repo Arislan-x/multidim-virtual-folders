@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="assets/logo.svg" alt="MultiDim Virtual Folders logo" width="120">
+</p>
+
 # MultiDim Virtual Folders
+
+[中文说明](README.zh-CN.md)
 
 MultiDim Virtual Folders is an Obsidian plugin for building multiple virtual folder trees from note frontmatter.
 
@@ -41,7 +47,7 @@ The same note can then appear in several virtual folder trees:
 
 ## Installation
 
-### Community Plugin
+### Obsidian Community Plugin Store
 
 After the plugin is approved by the Obsidian community plugin review process:
 
@@ -50,7 +56,26 @@ After the plugin is approved by the Obsidian community plugin review process:
 3. Search for `MultiDim Virtual Folders`.
 4. Install and enable the plugin.
 
-### Manual Installation
+### Offline Installation
+
+Use this method when the target computer cannot access GitHub or the Obsidian community plugin store.
+
+1. On a computer with internet access, download these files from a GitHub release:
+   - `main.js`
+   - `manifest.json`
+   - `styles.css`
+2. Copy the files to the offline computer.
+3. Create this folder in the target vault:
+
+```text
+.obsidian/plugins/multidim-virtual-folders/
+```
+
+4. Put `main.js`, `manifest.json`, and `styles.css` into that folder.
+5. Restart Obsidian or reload the app.
+6. Open Settings -> Community plugins and enable `MultiDim Virtual Folders`.
+
+### Manual Online Installation
 
 1. Download `main.js`, `manifest.json`, and `styles.css` from a GitHub release.
 2. Create this folder in your vault:
@@ -139,7 +164,7 @@ For local testing, copy these files into `.obsidian/plugins/multidim-virtual-fol
 - `main.js`
 - `styles.css`
 
-## Release
+## Release To GitHub
 
 Release tags must match the version in `manifest.json` and `package.json`.
 
@@ -157,7 +182,16 @@ The GitHub release workflow builds the plugin and uploads:
 - `styles.css`
 - `versions.json`
 
-For Obsidian community plugin submission, use the entry in `docs/community-plugin-entry.json` as a template.
+## Submit To The Obsidian Community Plugin Store
+
+Obsidian community plugins are distributed through GitHub releases and listed through the `obsidianmd/obsidian-releases` repository.
+
+1. Publish a GitHub release whose tag matches `manifest.json`.
+2. Confirm the release includes `main.js`, `manifest.json`, and `styles.css`.
+3. Fork `obsidianmd/obsidian-releases`.
+4. Add this plugin to `community-plugins.json` using `docs/community-plugin-entry.json` as the template.
+5. Open a pull request that only changes `community-plugins.json`.
+6. Complete the Obsidian PR checklist and wait for review.
 
 ## License
 
