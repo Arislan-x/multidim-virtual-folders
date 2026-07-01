@@ -48,6 +48,7 @@ interface VirtualDimensionConfig {
   pathIcons?: Record<string, string>;
   sortBy?: SortBy;
   sortDirection?: SortDirection;
+  startCollapsed?: boolean;
 }
 
 interface MultiDimVirtualFoldersSettings {
@@ -198,7 +199,8 @@ const DEFAULT_DIMENSIONS: VirtualDimensionConfig[] = [
     displaySide: "both",
     dateDisplayMode: "year",
     sortBy: "name",
-    sortDirection: "desc"
+    sortDirection: "desc",
+    startCollapsed: false
   },
   {
     id: "project",
@@ -214,7 +216,8 @@ const DEFAULT_DIMENSIONS: VirtualDimensionConfig[] = [
     manualPaths: [],
     pathIcons: {},
     sortBy: "name",
-    sortDirection: "asc"
+    sortDirection: "asc",
+    startCollapsed: false
   },
   {
     id: "source",
@@ -230,7 +233,8 @@ const DEFAULT_DIMENSIONS: VirtualDimensionConfig[] = [
     manualPaths: [],
     pathIcons: {},
     sortBy: "name",
-    sortDirection: "asc"
+    sortDirection: "asc",
+    startCollapsed: false
   }
 ];
 
@@ -240,6 +244,8 @@ const TRANSLATIONS = {
     commandOpenDefault: "打开多维虚拟目录",
     commandOpenLeft: "在左栏打开多维虚拟目录",
     commandOpenRight: "在右栏打开多维虚拟目录",
+    commandCollapseAll: "折叠所有目录",
+    collapseAllFolders: "折叠全部",
     viewTitle: "多维虚拟目录",
     appName: "MultiDim Virtual Folders",
     leftSidebar: "左栏",
@@ -304,6 +310,8 @@ const TRANSLATIONS = {
     pathDimension: "路径维度",
     displayPosition: "显示位置",
     displayPositionDesc: "同一个维度可以显示在左栏、右栏，或两侧同时显示。",
+    startCollapsedName: "默认折叠",
+    startCollapsedDesc: "开启后，打开该维度时所有目录默认折叠。",
     bothSide: "左栏和右栏",
     leftOnly: "仅左栏",
     rightOnly: "仅右栏",
@@ -352,6 +360,8 @@ const TRANSLATIONS = {
     commandOpenDefault: "Open MultiDim Virtual Folders",
     commandOpenLeft: "Open MultiDim Virtual Folders in left sidebar",
     commandOpenRight: "Open MultiDim Virtual Folders in right sidebar",
+    commandCollapseAll: "Collapse all folders",
+    collapseAllFolders: "Collapse all",
     viewTitle: "MultiDim Virtual Folders",
     appName: "MultiDim Virtual Folders",
     leftSidebar: "left sidebar",
@@ -416,6 +426,8 @@ const TRANSLATIONS = {
     pathDimension: "Path dimension",
     displayPosition: "Display side",
     displayPositionDesc: "The same dimension can appear on the left sidebar, right sidebar, or both.",
+    startCollapsedName: "Start collapsed",
+    startCollapsedDesc: "When enabled, all folders in this dimension start collapsed when opened.",
     bothSide: "Left and right",
     leftOnly: "Left only",
     rightOnly: "Right only",
@@ -504,6 +516,14 @@ export default class MultiDimVirtualFoldersPlugin extends Plugin {
       }
     });
 
+    this.addCommand({
+      id: "collapse-all",
+      name: this.t("commandCollapseAll"),
+      callback: () => {
+        this.collapseAllOpenViews();
+      }
+    });
+
     this.registerDomEvent(activeDocument, "dragstart", (event: DragEvent) => {
       const filePath = readMarkdownPathFromDragSource(this.app, event.target);
       if (!filePath) {
@@ -572,6 +592,16 @@ export default class MultiDimVirtualFoldersPlugin extends Plugin {
       active: true
     });
     await this.app.workspace.revealLeaf(leaf);
+  }
+
+  collapseAllOpenViews(): void {
+    for (const viewType of getAllViewTypes()) {
+      for (const leaf of this.app.workspace.getLeavesOfType(viewType)) {
+        if (leaf.view instanceof MultiDimVirtualFoldersView) {
+          leaf.view.collapseAll();
+        }
+      }
+    }
   }
 
   getDimensions(side?: SidebarSide): VirtualDimensionConfig[] {
@@ -868,6 +898,8 @@ export default class MultiDimVirtualFoldersPlugin extends Plugin {
 class MultiDimVirtualFoldersView extends ItemView {
   private activeDimensionId: string | null = null;
   private renderTimer: number | null = null;
+  private readonly collapsedNodePaths = new Set<string>();
+  private readonly collapseInitializedDimensionIds = new Set<string>();
 
   constructor(
     leaf: WorkspaceLeaf,
@@ -939,11 +971,67 @@ class MultiDimVirtualFoldersView extends ItemView {
     }
 
     const activeDimension = this.resolveActiveDimension(dimensions);
-    this.renderDimensionSwitcher(rootEl, dimensions, activeDimension.id);
-    this.renderManualPathCreator(rootEl, activeDimension);
+    const switcherEl = this.renderDimensionSwitcher(
+      rootEl,
+      dimensions,
+      activeDimension.id
+    );
+    const hasManualPathCreator = this.renderManualPathCreator(
+      rootEl,
+      activeDimension
+    );
+    if (!hasManualPathCreator) {
+      this.renderCollapseButton(switcherEl);
+    }
 
     const tree = buildDimensionTree(this.app, activeDimension);
+    this.applyInitialCollapseState(activeDimension, tree);
     this.renderDimension(rootEl, tree);
+  }
+
+  collapseAll(): void {
+    const detailsEls = this.contentEl.querySelectorAll<HTMLDetailsElement>(
+      ".multidim-vf-node"
+    );
+    detailsEls.forEach((detailsEl) => {
+      detailsEl.open = false;
+    });
+  }
+
+  private renderCollapseButton(containerEl: HTMLElement): void {
+    const collapseButtonEl = containerEl.createEl("button", {
+      cls: "multidim-vf-toolbar-button"
+    });
+    collapseButtonEl.type = "button";
+    const label = this.plugin.t("collapseAllFolders");
+    collapseButtonEl.title = label;
+    collapseButtonEl.setAttribute("aria-label", label);
+    setIcon(collapseButtonEl, "chevrons-down-up");
+    collapseButtonEl.addEventListener("click", () => {
+      this.collapseAll();
+    });
+  }
+
+  private applyInitialCollapseState(
+    config: VirtualDimensionConfig,
+    tree: DimensionTree
+  ): void {
+    if (
+      !config.startCollapsed ||
+      this.collapseInitializedDimensionIds.has(config.id)
+    ) {
+      return;
+    }
+
+    this.collapseInitializedDimensionIds.add(config.id);
+
+    const collectPaths = (node: VirtualTreeNode) => {
+      for (const child of node.children.values()) {
+        this.collapsedNodePaths.add(getCollapseKey(config.id, child.path));
+        collectPaths(child);
+      }
+    };
+    collectPaths(tree.root);
   }
 
   private resolveActiveDimension(
@@ -965,7 +1053,7 @@ class MultiDimVirtualFoldersView extends ItemView {
     rootEl: HTMLElement,
     dimensions: VirtualDimensionConfig[],
     activeDimensionId: string
-  ): void {
+  ): HTMLElement {
     const switcherEl = rootEl.createDiv({ cls: "multidim-vf-switcher" });
 
     for (const dimension of dimensions) {
@@ -1003,6 +1091,8 @@ class MultiDimVirtualFoldersView extends ItemView {
         this.showDimensionMenu(event, dimension);
       });
     }
+
+    return switcherEl;
   }
 
   private showDimensionMenu(event: MouseEvent, dimension: VirtualDimensionConfig): void {
@@ -1039,9 +1129,9 @@ class MultiDimVirtualFoldersView extends ItemView {
   private renderManualPathCreator(
     rootEl: HTMLElement,
     dimension: VirtualDimensionConfig
-  ): void {
+  ): boolean {
     if (dimension.type !== "path") {
-      return;
+      return false;
     }
 
     let draftPath = "";
@@ -1070,6 +1160,9 @@ class MultiDimVirtualFoldersView extends ItemView {
         }
       })();
     });
+
+    this.renderCollapseButton(creatorEl);
+    return true;
   }
 
   private renderDimension(parentEl: HTMLElement, tree: DimensionTree): void {
@@ -1089,7 +1182,15 @@ class MultiDimVirtualFoldersView extends ItemView {
     const detailsEl = parentEl.createEl("details", {
       cls: "multidim-vf-node"
     });
-    detailsEl.open = true;
+    const collapseKey = getCollapseKey(config.id, node.path);
+    detailsEl.open = !this.collapsedNodePaths.has(collapseKey);
+    detailsEl.addEventListener("toggle", () => {
+      if (detailsEl.open) {
+        this.collapsedNodePaths.delete(collapseKey);
+      } else {
+        this.collapsedNodePaths.add(collapseKey);
+      }
+    });
     const nodeColor = getNodeColor(config, node);
     detailsEl.style.setProperty("--multidim-vf-depth", String(node.depth));
     detailsEl.style.setProperty("--multidim-vf-accent", normalizeColor(config.color));
@@ -1835,6 +1936,18 @@ class MultiDimVirtualFoldersSettingTab extends PluginSettingTab {
           })
       );
 
+    new Setting(basicSectionEl)
+      .setName(this.plugin.t("startCollapsedName"))
+      .setDesc(this.plugin.t("startCollapsedDesc"))
+      .addToggle((toggle) =>
+        toggle
+          .setValue(workingDimension.startCollapsed === true)
+          .setDisabled(!isEditing)
+          .onChange((value) => {
+            workingDimension.startCollapsed = value;
+          })
+      );
+
     new Setting(dataSectionEl)
       .setName(this.plugin.t("propertyName"))
       .setDesc(this.plugin.t("propertyDesc"))
@@ -2280,6 +2393,10 @@ function addManualPathToTree(
   }
 }
 
+function getCollapseKey(dimensionId: string, nodePath: string): string {
+  return `${dimensionId}::${nodePath}`;
+}
+
 function getViewTypeForSide(side: SidebarSide): string {
   return side === "left" ? VIEW_TYPE_LEFT : VIEW_TYPE_RIGHT;
 }
@@ -2399,7 +2516,8 @@ function normalizeDimension(
     ),
     writeMode: normalizeWriteMode(rawDimension.writeMode),
     enabled: rawDimension.enabled !== false,
-    displaySide: normalizeDisplaySide(rawDimension.displaySide)
+    displaySide: normalizeDisplaySide(rawDimension.displaySide),
+    startCollapsed: rawDimension.startCollapsed === true
   };
 }
 
@@ -2433,7 +2551,8 @@ function createNewDimension(
       displaySide: "both",
       dateDisplayMode: "year",
       sortBy: "name",
-      sortDirection: "desc"
+      sortDirection: "desc",
+      startCollapsed: false
     };
   }
 
@@ -2451,7 +2570,8 @@ function createNewDimension(
     manualPaths: [],
     pathIcons: {},
     sortBy: "name",
-    sortDirection: "asc"
+    sortDirection: "asc",
+    startCollapsed: false
   };
 }
 
