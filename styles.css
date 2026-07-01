@@ -10,6 +10,33 @@
   padding: 6px 4px;
 }
 
+.multidim-vf-toolbar-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  padding: 0;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  background: var(--background-primary);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.multidim-vf-toolbar-button:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.multidim-vf-toolbar-button svg {
+  width: 15px;
+  height: 15px;
+}
+
 .multidim-vf-switcher {
   display: flex;
   align-items: center;
@@ -50,14 +77,15 @@
 
 .multidim-vf-manual-path {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   gap: 5px;
   margin: 0 0 7px;
 }
 
 .multidim-vf-manual-path input {
+  box-sizing: border-box;
   min-width: 0;
-  height: 27px;
+  height: 28px;
   padding: 2px 7px;
   border: 1px solid var(--background-modifier-border);
   border-radius: 6px;
@@ -67,10 +95,16 @@
 }
 
 .multidim-vf-manual-path button {
-  min-height: 27px;
+  box-sizing: border-box;
+  height: 28px;
   padding: 2px 8px;
   border-radius: 6px;
   font-size: 12px;
+}
+
+.multidim-vf-manual-path .multidim-vf-toolbar-button {
+  width: 28px;
+  padding: 0;
 }
 
 .multidim-vf-tree {
